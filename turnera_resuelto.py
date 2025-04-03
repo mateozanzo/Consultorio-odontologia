@@ -15,6 +15,37 @@ def menu():
 
     return opcion
 
+def agregar_doctor(id_lista, nombres, apellidos, tratamientos):
+    id = ingresar_id(id_lista)
+    nombre = ingresar_nombre()
+    apellido = ingresar_apellido()
+    tratamiento = ingresar_tratamiento(TRATAMIENTOS)
+
+    id_lista.append(id)
+    nombres.append(nombre)
+    apellidos.append(apellido)
+    tratamientos.append(tratamiento)
+
+    return "Doctor agregado correctamente."
+
+def eliminar_doctor(id_lista, nombres, apellidos, tratamientos):
+    if not id_lista:
+        return "No hay doctores registrados."
+
+    id_eliminar = int(input("Ingrese el ID del doctor a eliminar: "))
+
+    if id_eliminar in id_lista:
+        indice = id_lista.index(id_eliminar)
+
+        id_lista.pop(indice)
+        nombres.pop(indice)
+        apellidos.pop(indice)
+        tratamientos.pop(indice)
+
+        return f"Doctor con ID {id_eliminar} eliminado correctamente."
+    else:
+        return "El ID ingresado no existe."
+    
 
 def ingresar_turnos(nombres, numeros_socios, horarios, tratamientos, tratamiento_opciones, turnos_maximos, hora_desde, hora_hasta):
 
@@ -43,6 +74,19 @@ def ingresar_nombre():
         nombre = input("\nIngrese nombre del paciente: ")
         
     return nombre
+
+def ingresar_apellido():
+    apellidos = input("\nIngrese apellido del doctor: ")
+    while apellidos == '':
+        print("El apellido no puede estar vacío.")
+        apellidos = input("\nIngrese napellido del paciente: ")
+        
+    return apellidos
+
+def ingresar_id(array_id):
+    id=array_id[-1]+1
+    print(f"el array es: "+id)
+    return id
 
 
 def ingresar_socio():
@@ -112,6 +156,8 @@ def eliminar_turno(nombres, numeros_socios, horarios, tratamientos):
     return(f"Se eliminó correctamente el turno para las {horario} hs. correspondiente a {nombre} (Nº/S: {numero_socio})")
 
 
+
+
 def buscar(item, arreglo):
     '''Busca un item dentro de un arreglo. Retorna -1 si no lo encuentra o el indice'''
     i = 0   
@@ -144,6 +190,8 @@ nombres = []
 numeros_socios = []
 horarios = []
 tratamientos = []
+id=[]
+apellidos=[]
 
 
 # PROGRAMA MAIN (PRINCIPAL)
