@@ -9,11 +9,12 @@ def menu():
     print("\t3. Eliminar turnos cancelados")
     print("\t4. Agregar doctor")
     print("\t5. Eliminar doctor")
+    print("\t6. salir")
 
-    opcion = int(input("\nIngrese opción 1 a 5: "))
-    while opcion < 1 or opcion > 5:
+    opcion = int(input("\nIngrese opción 1 a 6: "))
+    while opcion < 1 or opcion > 6:
         print("Opción no valida")
-        opcion = int(input("\nIngrese opción 1 a 5: "))
+        opcion = int(input("\nIngrese opción 1 a 6: "))
 
     return opcion
 
@@ -68,6 +69,16 @@ def ingresar_turnos(nombres, numeros_socios, horarios, tratamientos, tratamiento
     tratamientos.append(tratamiento)
     return "Turno guardado correctamente"
 
+def mostrar_turnos(nombres, numeros_socios, horarios, tratamientos, tratamiento_opciones):
+    if not nombres:
+        return "No hay turnos registrados."
+
+    print("\nLista de turnos:")
+    for i in range(len(nombres)):
+        print(f"{i+1}. {nombres[i]} - Socio: {numeros_socios[i]} - Horario: {horarios[i]} hs - Tratamiento: {tratamiento_opciones[tratamientos[i]]}")
+
+    return "Turnos mostrados correctamente."
+
 
 def ingresar_nombre():
     nombre = input("\nIngrese nombre del paciente: ")
@@ -78,17 +89,23 @@ def ingresar_nombre():
     return nombre
 
 def ingresar_apellido():
-    apellidos = input("\nIngrese apellido del doctor: ")
-    while apellidos == '':
+    apellido = input("\nIngrese apellido del doctor: ")
+    while apellido == '':
         print("El apellido no puede estar vacío.")
-        apellidos = input("\nIngrese napellido del paciente: ")
-        
-    return apellidos
+        apellido = input("\nIngrese apellido del doctor: ")
+    return apellido
 
-def ingresar_id(array_id):
-    id=array_id[-1]+1
-    print(f"el array es: "+id)
-    return id
+
+def ingresar_id(id_lista):
+    if not id_lista:
+        return 1  
+
+    id_lista.sort() 
+
+    for i in range(1, id_lista[-1] + 2):  
+        if i not in id_lista:
+            return i
+
 
 
 def ingresar_socio():
@@ -101,28 +118,26 @@ def ingresar_socio():
 
 
 def ingresar_horario(horarios, hora_desde, hora_hasta):
-
     horario = float(input("Ingrese el horario (ej: 8, 9.30): "))
-    while validar_horario(horario, hora_desde, hora_hasta) or buscar(horario, horarios)>=0:
-        print("Turno invalido u ocupado")
+    while validar_horario(horario, hora_desde, hora_hasta) or horario in horarios:
+        print("Turno inválido u ocupado")
         horario = float(input("\nIngrese el horario (ej: 8, 9.30): "))
-
     return horario
 
 
+
 def ingresar_tratamiento(tratamiento_opciones):
-    n_tratamientos = len(tratamiento_opciones)
-
     print("Seleccione un tratamiento: ")
-    for i in range (n_tratamientos):
-        print(f"\t{i+1}. {tratamiento_opciones[i]}")
+    for i, tratamiento in enumerate(tratamiento_opciones, 1):
+        print(f"\t{i}. {tratamiento}")
 
-    opcion = int(input(f"Ingrese opción 1 a {n_tratamientos}: "))
-    while opcion < 1 or opcion > n_tratamientos:
-        print("Opción no valida")
-        opcion = int(input(f"\nIngrese opción 1 a {n_tratamientos}: "))
+    opcion = int(input(f"Ingrese opción 1 a {len(tratamiento_opciones)}: "))
+    while opcion < 1 or opcion > len(tratamiento_opciones):
+        print("Opción no válida")
+        opcion = int(input(f"Ingrese opción 1 a {len(tratamiento_opciones)}: "))
 
-    return opcion - 1
+    return tratamiento_opciones[opcion - 1]  # Guardamos el nombre, no el índice
+
 
 
 def intercambiar(arreglo, i, j):
@@ -192,13 +207,13 @@ nombres = []
 numeros_socios = []
 horarios = []
 tratamientos = []
-id=[]
+id_lista=[]
 apellidos=[]
 
 
 # PROGRAMA MAIN (PRINCIPAL)
 opcion = menu()
-while opcion != 5:
+while opcion != 6:
 
     if opcion == 1:
         mensaje = ingresar_turnos(nombres, numeros_socios, horarios, tratamientos, TRATAMIENTOS, TURNOS_MAXIMOS, APERTURA, CIERRE)
@@ -210,12 +225,12 @@ while opcion != 5:
         mensaje = eliminar_turno(nombres, numeros_socios, horarios, tratamientos)
 
     if opcion == 4:
-        mensaje= agregar_doctor(id,nombres, apellidos,tratamientos)
+        mensaje = agregar_doctor(id_lista, nombres, apellidos, tratamientos)
 
-    if opcion ==5:
-        mensaje= eliminar_doctor(id,nombres,apellidos,tratamientos)
+    if opcion == 5:
+        mensaje = eliminar_doctor(id_lista, nombres, apellidos, tratamientos)
 
     print(mensaje)
     opcion = menu()
 
-print("\nPrograma finalizado por el usuario cuando ingresó 5.")
+print("\nPrograma finalizado por el usuario cuando ingresó 6.")
