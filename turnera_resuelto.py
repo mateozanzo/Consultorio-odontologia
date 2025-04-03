@@ -7,6 +7,8 @@ def menu():
     print("\t1. Ingresar turnos")
     print("\t2. Ver turnos")
     print("\t3. Eliminar turnos cancelados")
+    print("\t4. Agregar doctor")
+    print("\t5. Eliminar doctor")
 
     opcion = int(input("\nIngrese opción 1 a 5: "))
     while opcion < 1 or opcion > 5:
@@ -206,6 +208,12 @@ while opcion != 5:
 
     if opcion == 3:
         mensaje = eliminar_turno(nombres, numeros_socios, horarios, tratamientos)
+
+    if opcion == 4:
+        mensaje= agregar_doctor(id,nombres, apellidos,tratamientos)
+
+    if opcion ==5:
+        mensaje= eliminar_doctor(id,nombres,apellidos,tratamientos)
 
     print(mensaje)
     opcion = menu()
