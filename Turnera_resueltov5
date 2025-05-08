@@ -9,7 +9,7 @@ def menu():
         "4. Agregar doctor",
         "5. Eliminar doctor",
         "6. Mostrar doctores.",
-        "7. salir"
+        "7. Salir"
     ]
 
     max_largo = max(len(linea) for linea in menu_items)
@@ -123,7 +123,7 @@ def ingresar_turnos(nombres, numeros_socios, horarios, tratamientos, tratamiento
         return "No hay turnos disponibles"
     
 
-def mostrar_turnos(nombres, numeros_socios, horarios, tratamientos, tratamiento_opciones):
+def mostrar_turnos(nombres, numeros_socios, horarios, tratamientos):
     if not nombres:
         return "No hay turnos registrados."
 
@@ -216,22 +216,6 @@ def ingresar_tratamiento(tratamiento_opciones):
     return tratamiento_opciones[opcion - 1]  
 
 
-
-def intercambiar(arreglo, i, j):
-    aux = arreglo[j]
-    arreglo[j] = arreglo[i]
-    arreglo[i] = aux
-
-
-def validar_horario(horario, hora_desde, hora_hasta):
-    if horario >= hora_desde and horario <= hora_hasta:
-        z = int((horario-int(horario))*100)
-        if z == 0 or z == 30: 
-            return 0
-        
-    return 1 
-
-
 def eliminar_turno(nombres, numeros_socios, horarios, tratamientos):
     socio = ingresar_socio()
     indice = buscar(socio, numeros_socios) 
@@ -286,7 +270,7 @@ while opcion != 7:
         mensaje = ingresar_turnos(nombres_turnos, numeros_socios, horarios, tratamientos_turno, TRATAMIENTOS, TURNOS_MAXIMOS, APERTURA, CIERRE)
 
     if opcion == 2:
-        mensaje = mostrar_turnos(nombres_turnos, numeros_socios, horarios, tratamientos_turno, TRATAMIENTOS)
+        mensaje = mostrar_turnos(nombres_turnos, numeros_socios, horarios, tratamientos_turno)
 
     if opcion == 3:
         mensaje = eliminar_turno(nombres_turnos, numeros_socios, horarios, tratamientos_turno)
