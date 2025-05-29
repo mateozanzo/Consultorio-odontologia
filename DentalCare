@@ -20,8 +20,11 @@ def registrar_usuario():
     apellido = input("Apellido: ")
     email = input("Email: ")
     dni = input("Documento (DNI): ")
-    perfil = input("Perfil (admin/paciente/medico): ").lower()
-    if perfil not in ["admin", "paciente", "medico"]:
+    perfil = input("Perfil (paciente/medico): ").lower()
+    while perfil=="admin":
+        print("el perfil no puede ser admin")
+        perfil = input("Perfil (paciente/medico): ").lower()
+    if perfil not in ["paciente", "medico"]:
         print("Perfil inválido. Se asignará 'paciente' por defecto.")
         perfil = "paciente"
 
@@ -186,21 +189,73 @@ def ingresar_turnos():
         return f"Turno registrado. Doctor asignado: {doctor_asignado}"
     return "Opción de doctor inválida."
 
+
+
 def mostrar_turnos(usuario, perfil):
-    if not nombres_turnos:
-        return "No hay turnos registrados."
-    turnos = list(zip(horarios, nombres_turnos, numeros_socios, tratamientos_turno))
-    turnos.sort()
-    for i, (horario, nombre, socio, (tratamiento, doctor)) in enumerate(turnos, 1):
-        if perfil == "medico" and usuario.split("@")[0] not in doctor:
-            continue
-        print(f"{i}. {nombre} - Socio: {socio} - Horario: {horario.strftime('%d/%m/%Y %H:%M')} - Tratamiento: {tratamiento} - Doctor: {doctor}")
-    
-    opcion = input("\n¿Desea ver los turnos de un paciente específico? (s/n): ").lower()
-    if opcion == "s":
-        resultado = mostrar_turno_paciente()
-        print(resultado)
-    return "Turnos listados."
+    if perfil == "admin":
+        print("1. Ver todos los turnos.")
+        print("2. Ver los turnos de un tratamiento.")
+        print("3. ver los turnos de un paciente especifico")
+        try:
+            opcion = int(input("Seleccione una opción: "))
+        except ValueError:
+            return "Opción inválida."
+
+        if opcion == 1:
+            if not nombres_turnos:
+                return "No hay turnos registrados."
+            turnos = list(zip(horarios, nombres_turnos, numeros_socios, tratamientos_turno))
+            turnos.sort()
+            for i, (horario, nombre, socio, (tratamiento, doctor)) in enumerate(turnos, 1):
+                print(f"{i}. {nombre} - Socio: {socio} - Horario: {horario.strftime('%d/%m/%Y %H:%M')} - Tratamiento: {tratamiento} - Doctor: {doctor}")
+            return "Turnos listados."
+
+        elif opcion == 2:
+            for i, t in enumerate(TRATAMIENTOS):
+                print(f"{i+1}. {t}")
+            try:
+                idx = int(input("Seleccione tratamiento: ")) - 1
+                if not (0 <= idx < len(TRATAMIENTOS)):
+                    return "Tratamiento inválido."
+                tratamiento_seleccionado = TRATAMIENTOS[idx]
+            except ValueError:
+                return "Entrada inválida. Debe ser un número."
+
+            turnos = list(zip(horarios, nombres_turnos, numeros_socios, tratamientos_turno))
+            turnos.sort()
+            encontrados = False
+            for i, (horario, nombre, socio, (tratamiento, doctor)) in enumerate(turnos, 1):
+                if tratamiento == tratamiento_seleccionado:
+                    print(f"{i}. {nombre} - Socio: {socio} - Horario: {horario.strftime('%d/%m/%Y %H:%M')} - Tratamiento: {tratamiento} - Doctor: {doctor}")
+                    encontrados = True
+            if not encontrados:
+                return f"No hay turnos registrados para el tratamiento '{tratamiento_seleccionado}'."
+            return "Turnos listados."
+        elif opcion==3:
+            resultado = mostrar_turno_paciente()
+            print(resultado)
+            
+        else:
+            return "Opción inválida."
+
+    elif perfil == "medico":
+        if not nombres_turnos:
+            return "No hay turnos registrados."
+        turnos = list(zip(horarios, nombres_turnos, numeros_socios, tratamientos_turno))
+        turnos.sort()
+        encontrados = False
+        for i, (horario, nombre, socio, (tratamiento, doctor)) in enumerate(turnos, 1):
+            if usuario.split("@")[0] in doctor:
+                print(f"{i}. {nombre} - Socio: {socio} - Horario: {horario.strftime('%d/%m/%Y %H:%M')} - Tratamiento: {tratamiento} - Doctor: {doctor}")
+                encontrados = True
+        if not encontrados:
+            return "No tiene turnos asignados."
+        return "Turnos listados."
+
+    elif perfil == "paciente":
+        return mostrar_turno_paciente()
+    return "Perfil desconocido."
+        
 
 def mostrar_turno_paciente():
     if not nombres_turnos:
@@ -220,7 +275,7 @@ def mostrar_turno_paciente():
             encontrados = True
     if not encontrados:
         return "El paciente no tiene turnos asignados."
-
+    return "Turnos listados."
 def eliminar_turno():
     mostrar_turnos(usuario_actual, perfil_actual)
     idx = int(input("Número de turno a eliminar: ")) - 1
