@@ -1,0 +1,30 @@
+{
+    "turnos": {
+        "nombres": [],
+        "numeros_socios": [],
+        "horarios": [],
+        "tratamientos": []
+    },
+    "doctores": {
+        "id": [
+            "D001",
+            "D002",
+            "D003"
+        ],
+        "nombres": [
+            "Mateo",
+            "Matias",
+            "Alejandra"
+        ],
+        "apellidos": [
+            "Zanzottera",
+            "Saafigueroa",
+            "Gonzalez"
+        ],
+        "tratamientos": [
+            0,
+            1,
+            2
+        ]
+    }
+}
