@@ -1,9 +1,9 @@
 {
-    "mzanzottera@gmail.com": {
-        "nombre": "mateo",
-        "apellido": "zanzottera",
-        "dni": "123",
-        "password": "123",
+    "dentalCare": {
+        "nombre": "dental",
+        "apellido": "care",
+        "dni": "000",
+        "password": "123456",
         "perfil": "admin"
     }
 }
