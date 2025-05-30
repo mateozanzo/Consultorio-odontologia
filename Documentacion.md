@@ -1,4 +1,4 @@
-# DentalClaere - Consultorio Odontologico.
+# DentalCare - Consultorio Odontologico.
 
 Bienvenido al consultorio **DentalCare**. Aqui podremos atenter cualquier necesidad que tenga y resolver todos sus problema odontologicos. Por medio de controles e intervenciones quirurjicas de la mano de los mejores odontologos del pais.
 
@@ -7,6 +7,7 @@ Bienvenido al consultorio **DentalCare**. Aqui podremos atenter cualquier necesi
 - **DentalCare.py** Se encuentra el sistema principal.
 - **datos_consultorio.json** Se encuntran los datos de los turnos y de la cuentas creadas.
 - **Modelado.png** Se encuentra el modelado de la Interfaz Grafica.
+- **DER.png** Se encuentra el diagrama de entidad relacion.
 
 ## Funcionalidades.
 
