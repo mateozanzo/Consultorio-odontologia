@@ -1,9 +1,0 @@
-{
-    "dentalCare": {
-        "nombre": "dental",
-        "apellido": "care",
-        "dni": "000",
-        "password": "123456",
-        "perfil": "admin"
-    }
-}
